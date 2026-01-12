@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    // 配置 MathJax 使用 $ 作为行内公式分隔符
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$']],
+            displayMath: [['$$', '$$']]
+        }
+    };
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数学模型课程小程序作业展示</title>
+    <style>
+        /* CSS 样式部分 */
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #b3c2cf;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #115ec9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 2;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 600px; /* 模拟手机宽度 */
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 头部 */
+        header {
+            background: var(--primary-color);
+            color: rgb(249, 245, 245);
+            padding: 2rem 1.5rem;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 20px;
+        }
+
+        h1 { margin: 0; font-size: 1.8rem; }
+        .subtitle { font-size: 0.9rem; opacity: 0.9; margin-top: 5px; }
+
+        /* 页面切换逻辑 */
+        .page {
+            padding: 1.5rem;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        /* 隐藏页面 */
+        .hidden {
+            display: none;
+        }
+
+        /* 介绍文字 */
+        .intro-box {
+            background: #fcfdff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-bottom: 0rem;
+            border-radius: 2px;
+            font-size: 0.90rem;
+            color: var(--text-main);
+        }
+
+        /* 模块卡片网格 */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card:active { transform: scale(0.98); }
+
+        .card-img {
+            height: 200px;
+            background-color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #22497f;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        /* 实际项目中，你会用 <img src="..."> 替换上面的 div */
+
+        .card-body { padding: 1rem; }
+        .card-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .card-desc { font-size: 0.85rem; color: var(--text-sub); }
+
+        /* 详情页样式 */
+        .detail-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+        .detail-content h2 { color: var(--primary-color); }
+        .detail-img-placeholder {
+            width: 50%;
+            height: 100px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        /* 数学公式模拟样式 */
+        .math {
+            font-family: inherit; /* 让 MathJax 决定字体 */
+            background: transparent; /* 去掉灰色背景 */
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div id="home-page" class="page">
+        <header style="margin: -1.5rem -1.5rem 1.5rem -1.5rem;">
+            <h1>Space Mapping（空间映射）算法介绍</h1>
+            <div class="subtitle">Space Mapping是一种常用的微波器件建模优化算法</div>
+        </header>
+
+        <div class="intro-box">
+            <p><strong>Space Mapping (SM)</strong> 技术由 <strong>John W. Bandler</strong> 教授于 1994 年提出。</p>
+            <p>其核心思想是将计算量巨大的<strong>细模型 (Fine Model)</strong> 与计算快速的<strong>粗模型 (Coarse Model)</strong> 通过数学映射建立联系。
+                粗模型承担主要的优化迭代任务，而细模型负责校准误差。空间映射技术在滤波器、天线和超表面建模和优化方面已得到大量应用，随着技术不断发展，空间映射技术已经发展了
+                很多分支，包括输入空间映射、输出空间映射、频率空间映射和基于粗细网格的空间映射等。</p>
+            <p>本小程序将介绍 Space Mapping 算法的3种主流分支算法和基本原理。</p>
+        </div>
+
+        <h3 style="margin-bottom: 1rem;">3种主流的Space Mapping算法</h3>
+        
+        <div class="grid">
+            <div class="card" onclick="showDetail('input-sm')">
+                <!-- <div class="card-img" style="background: #dbeafe;">[ 图：Input SM ]</div> -->
+                <img src="Input_SM.png" width="100%" class="card-img">
+                <div class="card-body">
+                    <div class="card-title">Input SM</div>
+                    <div class="card-desc">输入空间映射，通过输入参数的映射变换，来校准模型。</div>
+                </div>
+            </div>
+
+            <div class="card" onclick="showDetail('output-sm')">
+                <!-- <div class="card-img" style="background: #fae8ff;">[ 图：Output SM ]</div> -->
+                <img src="Output_SM.png" width="100%" class="card-img">
+                <div class="card-body">
+                    <div class="card-title">Output SM</div>
+                    <div class="card-desc">输出空间映射，直接对粗模型的响应进行映射变换。</div>
+                </div>
+            </div>
+
+            <div class="card" onclick="showDetail('freq-sm')">
+                <!-- <div class="card-img" style="background: #dcfce7;">[ 图：Freq Mapping ]</div> -->
+                <img src="Freq_SM.png" width="100%" class="card-img">
+                <div class="card-body">
+                    <div class="card-title">Frequency SM</div>
+                    <div class="card-desc">频率空间映射，对频率值进行映射变换，专门针对频域响应偏移的修正。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div id="detail-input-sm" class="page hidden">
+    <div class="detail-header">
+        <button class="back-btn" onclick="goHome()">&#8592;</button>
+        <h2>Input Space Mapping</h2>
+    </div>
+    
+    <div class="detail-content">
+        <figure style="margin: 0 0 1.5rem 0;">
+            <img src="Input_SM.png" width="100%" alt="Input SM Diagram" style="border-radius: 8px; border: 1px solid #eee;">
+            <figcaption style="font-size: 0.85rem; color: #64748b; text-align: center; margin-top: 8px;">
+                图 1: Input SM 原理框图 — 通过映射函数 $P$ 建立粗细模型间的参数关联
+            </figcaption>
+        </figure>
+
+        <p>输入空间映射（Input SM）是最基础的空间映射形式 [1]。</p>
+        
+        <p>假设粗模型参数为 <span class="math">$x_c$</span>，细模型参数为 <span class="math">$x_f$</span>。我们寻找一个映射函数 <span class="math">$P$</span>，使得：</p>
+        
+        <div style="text-align:center; margin: 1.2rem 0; font-weight:bold; background: #f8fafc; padding: 10px; border-radius: 6px;">
+            <span class="math">$R_c(x_c) = R_c(P(x_f)) \approx R_f(x_f)$</span>
+        </div>
+
+        <p><strong>算法执行步骤：</strong></p>
+        <ul style="padding-left: 1.2rem; line-height: 1.8; color: #334155;">
+            <li>(1) 进行单位空间映射 <span class="math">$x_c = \mathbf{B} \cdot x_c + c$</span>，确定初始映射关系 <span class="math">$w$</span>，在粗模型中优化得到设计参数最优解 <span class="math">$x_c^*$</span>。</li>
+            <li>(2) 令细模型初始参数中心值 <span class="math">$x_1^1 = x_c^*$</span>。</li>
+            <li>(3) 定义目标函数 <span class="math">$U$</span> 表示细模型响应与设计指标间的误差。若评估指标 <span class="math">$E_d \leq 0$</span>，则迭代停止。</li>
+            <li>(4) 若不满足，则提取映射关系 <span class="math">$w^k$</span>，使当前替代模型与细模型空间误差最小。</li>
+            <li>(5) 固定最优映射关系 <span class="math">$w^*$</span>，对替代模型进行优化，最终得到细模型最优设计参数 <span class="math">$x_f^*$</span>。</li>
+        </ul>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 2rem 0 1rem 0;">
+        
+        <p style="font-size: 0.75rem; color: #94a3b8; line-height: 1.4;">
+            [1] Bandler J W, Biernacki R M, Chen S H, et al. Space mapping technique for electromagnetic optimization[J]. IEEE Transactions on microwave theory and techniques, 1994, 42(12):2536-2544.
+        </p>
+    </div>
+</div>
+<div id="detail-output-sm" class="page hidden">
+    <div class="detail-header">
+        <button class="back-btn" onclick="goHome()">&#8592;</button>
+        <h2>Input Space Mapping</h2>
+    </div>
+    
+    <div class="detail-content">
+        <figure style="margin: 0 0 1.5rem 0;">
+            <img src="Output_SM.png" width="100%" alt="Output SM Diagram" style="border-radius: 8px; border: 1px solid #eee;">
+            <figcaption style="font-size: 0.85rem; color: #64748b; text-align: center; margin-top: 8px;">
+                图 1: Output SM 原理框图 — 通过映射函数 $Q$ 建立粗细模型间的响应关联
+            </figcaption>
+        </figure>
+
+        <p>输出空间映射（Output SM）是一种直接对粗模型的响应进行映射变换的空间映射形式 [2]。当输入空间映射不奏效时，考虑使用输出空间映射做微调。例如，假设细模型函数为 <span class="math">$y=x^2-2$</span>，粗模型函数为 <span class="math">$y=x^2$</span>
+            当<span class="math">$x$</span>在0的领域内时，粗细模型之间无法使用输入空间映射找到一个映射关系<span class="math">$P$</span>，使得<span class="math">$x_c=P(x_f)$</span>，此时可以考虑使用输出空间映射。
+        
+        <p>假设粗模型响应为 <span class="math">$R_c(x_c)$</span>，细模型响应为 <span class="math">$R_f(x_f)$</span>。我们寻找一个映射函数 <span class="math">$Q$</span>，使得：</p>
+        
+        <div style="text-align:center; margin: 1.2rem 0; font-weight:bold; background: #f8fafc; padding: 10px; border-radius: 6px;">
+            <span class="math">$R_s(x_f) = Q(R_c(x_f)) = R_f(x_f)$</span>
+        </div>
+
+        <p>算法执行步骤同输出空间映射，区别在于映射函数的输入，输入空间映射函数的输入是设计变量<span class="math">$\boldsymbol{x}$</span>，输出空间映射函数的输入是响应变量<span class="math">$\boldsymbol{R}(f)$</span>。</p>
+
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 2rem 0 1rem 0;">
+        
+        <p style="font-size: 0.75rem; color: #94a3b8; line-height: 1.4;">
+            [2] Rayas-Sanchez J E, Gutierrez-Ayala V. EM-based Monte Carlo analysis and yield prediction of microwave circuits using linear-input neural-output space mapping[J]. IEEE transactions on microwave theory and techniques, 2006, 54(12): 4528-4537.
+        </p>
+    </div>
+</div>
+
+
+<div id="detail-freq-sm" class="page hidden">
+        <div class="detail-header">
+            <button class="back-btn" onclick="goHome()">&#8592;</button>
+            <h2>Frequency Mapping</h2>
+        </div>
+        <div class="detail-content">
+        <figure style="margin: 0 0 1.5rem 0;">
+            <img src="Freq_SM.png" width="100%" alt="Frequency SM Diagram" style="border-radius: 8px; border: 1px solid #eee;">
+            <figcaption style="font-size: 0.85rem; color: #64748b; text-align: center; margin-top: 8px;">
+                图 1: Frequency SM 原理框图 — 通过映射函数 $P$ 建立粗细模型间的响应关联
+            </figcaption>
+        </figure>
+
+            
+            
+            
+            <p>在微波和射频工程中，粗细模型之间最常见的误差是<strong>频率轴的偏移</strong>[3]。</p>
+            <p>Frequency Mapping 专门通过拉伸或压缩频率轴变量 <span class="math">f</span>，来对齐两个模型的响应曲线。这在滤波器设计中尤为有效。</p>
+            <p>例如对于像素化超表面单元，如果采用输入空间映射，则后续替代模型优化过程中无法利用反向传播算法更新像素化参数，因为像素化单元不可导。如果采用输出空间映射，
+                则替代模型响应和细模型响应之间误差过大，映射关系难以训练。因此这个时候只能采用频率空间映射。</p>
+            </p>
+                    <p style="font-size: 0.75rem; color: #94a3b8; line-height: 1.4;">
+            [3] Bakr M H, Bandler J W, Ismail M A, et al. Neural space-mapping optimization for EM-based design[J]. IEEE Transactions on Microwave Theory and Techniques, 2000, 48(12): 2307-2315.
+        </p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // JavaScript 逻辑部分
+    
+    function showDetail(id) {
+        // 1. 隐藏首页
+        document.getElementById('home-page').classList.add('hidden');
+        
+        // 2. 隐藏所有详情页（重置状态）
+        document.querySelectorAll('.page').forEach(p => {
+            if(p.id !== 'home-page') p.classList.add('hidden');
+        });
+
+        // 3. 显示目标详情页
+        const targetId = 'detail-' + id;
+        const targetPage = document.getElementById(targetId);
+        if(targetPage) {
+            targetPage.classList.remove('hidden');
+            // 滚动到顶部
+            window.scrollTo(0, 0);
+        }
+    }
+
+    function goHome() {
+        // 1. 隐藏所有详情页
+        document.querySelectorAll('.page').forEach(p => {
+            if(p.id !== 'home-page') p.classList.add('hidden');
+        });
+
+        // 2. 显示首页
+        document.getElementById('home-page').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
